@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+    xmlns:cxf="http://cxf.apache.org/core"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+    http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
+
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
+
+	<bean id="bookServiceV1" class="org.topgroup.restsample.service.BookServiceBean"></bean>
+	
+	<bean id='jacksonJsonProvider' class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider" />
+	
+	<bean id='jacksonXmlProvider' class="com.fasterxml.jackson.jaxrs.xml.JacksonJaxbXMLProvider" />
+
+    <jaxrs:server id="restV1" address="/rest/v1">
+        <jaxrs:serviceBeans>
+            <ref bean="bookServiceV1" />
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+			<ref bean='jacksonJsonProvider' />
+			<ref bean='jacksonXmlProvider' />
+		</jaxrs:providers>
+        <jaxrs:extensionMappings>
+            <entry key="xml" value="application/xml" />
+            <entry key="json" value="application/json" />
+        </jaxrs:extensionMappings>
+    </jaxrs:server>
+
+
+</beans>
